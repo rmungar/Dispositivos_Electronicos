@@ -12,6 +12,7 @@ class Lavadora(val marca: String, var estado: String = "Apagada") : EncendidoApa
         return super.apagar()
     }
 
+
     override fun toString(): String {
         return "$marca que está $estado."
     }
