@@ -1,0 +1,20 @@
+fun main() {
+    val telefono1 = Telefono("Xiaomi", "Redmi")
+    println(telefono1.encender())
+    println(telefono1.reiniciar())
+    println(telefono1.apagar())
+    println(telefono1.toString())
+    val lavadora1 = Lavadora("Toshiba")
+    println(lavadora1.encender())
+    println(lavadora1.apagar())
+    println(lavadora1.toString())
+    val coche1 = Coche("dodge", "charger", 120)
+    println(coche1.encender())
+    coche1.acelerar(240)
+    println(coche1.toString())
+    coche1.frenar(361)
+    println(coche1.toString())
+    println(coche1.apagar())
+    println(coche1.toString())
+
+}
