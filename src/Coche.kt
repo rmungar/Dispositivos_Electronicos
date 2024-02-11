@@ -1,13 +1,13 @@
 /**
  * La clase coche hereda de las interfaces EncendidoApagado y Vehiculo
- * Los parámetros heredados son:
- * @param marca -> Cadena de caracteres que indica la marca del coche
- * @param modelo -> Cadena de caracteres que indica el modelo del coche
- * @param kmh -> Entero que representa la velcidad a la que va el coche
- * El parámetro propio es:
- * @param motorEncendido -> Booleano que indica el estado del coche
+ * Las propiedades heredadas son:
+ * @property marca -> Cadena de caracteres que indica la marca del coche
+ * @property modelo -> Cadena de caracteres que indica el modelo del coche
+ * @property kmh -> Entero que representa la velcidad a la que va el coche
+ * La propiedad propia es:
+ * @property motorEncendido -> Booleano que indica el estado del coche
  */
-class Coche(marca:String, modelo:String, kmh:Int,override var motorEncendido: Boolean = false) :EncendidoApagado, Vehiculo {
+class Coche(marca:String, modelo:String, override var kmh: Int,override var motorEncendido: Boolean = false) :EncendidoApagado, Vehiculo {
     init {
         require(marca.isNotBlank()) {"La marca no puede ser un campo vacío"}
 
@@ -15,20 +15,31 @@ class Coche(marca:String, modelo:String, kmh:Int,override var motorEncendido: Bo
 
         require(kmh > 0) {"Este campo no puede ser menor que 0"}
     }
-    val marca: String = marca.replaceFirstChar { it.uppercase() }
-    val modelo:String = modelo.replaceFirstChar { it.uppercase() }
-    override var kmh: Int = kmh
+    private val marca: String = marca.replaceFirstChar { it.uppercase() }
+    private val modelo:String = modelo.replaceFirstChar { it.uppercase() }
 
+
+    /**
+     * Cambia el valor del motorEncendido del objeto y retorna un String
+     * @return String
+     */
     override fun encender(): String {
         motorEncendido = true
         return "El motor se ha arrancado"
     }
-
+    /**
+     * Cambia el valor del motorEncendido del objeto y retorna un String
+     * @return String
+     */
     override fun apagar(): String {
         motorEncendido = false
         return "El motor se ha parado"
     }
-    fun arrancado(): String{
+    /**
+     * Comprueba el valor de motorEncendido y retorna un String en función de dicho valor
+     * @return String
+     */
+    private fun arrancado(): String{
         return if (motorEncendido){
             "Arrancado"
         } else{
@@ -36,26 +47,33 @@ class Coche(marca:String, modelo:String, kmh:Int,override var motorEncendido: Bo
         }
     }
 
+    /**
+     * La función acelerar toma un valor, comprueba el estado del coche y actua en función de esta
+     * @param vel -> Entero que representa una velocidad
+     * @return -> String que nos indica la velocidad del vehiculo
+     */
     override fun acelerar(vel: Int): String {
-        if (motorEncendido){
-            return super.acelerar(vel)
-        }
-        else{
-            return "Para acelerar hay que tener el motor encendido"
+        return if (motorEncendido){
+            super.acelerar(vel)
+        } else{
+            "Para acelerar hay que tener el motor encendido"
         }
     }
 
+    /**
+     * La función acelerar toma un valor, comprueba el estado del coche y actua en función de esta
+     * @param vel -> Entero que representa una velocidad
+     * @return -> String que nos indica la velocidad del vehiculo
+     */
     override fun frenar(vel: Int): String {
-        if (motorEncendido){
+        return if (motorEncendido){
             if (kmh - vel > 0){
-                return super.frenar(vel)
+                super.frenar(vel)
+            } else{
+                super.frenar(kmh)
             }
-            else{
-                return super.frenar(kmh)
-            }
-        }
-        else{
-            return "Por mucho que frenes no te vas a mover igualmente"
+        } else{
+            "Por mucho que frenes no te vas a mover igualmente"
         }
     }
 
